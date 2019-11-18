@@ -1,14 +1,18 @@
 package com.example.loginsegurity;
 
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class loginUsuario extends AppCompatActivity {
 
     Button btnIniciarLogin, btnRegistrarLogin;
+    EditText emailLogin, registroLogin;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +21,8 @@ public class loginUsuario extends AppCompatActivity {
 
         btnIniciarLogin = (Button) findViewById(R.id.btnIniciarLogin);
         btnRegistrarLogin = (Button) findViewById(R.id.btnRegistrarLogin);
+        emailLogin = (EditText) findViewById(R.id.emailLogin);
+        registroLogin = (EditText) findViewById(R.id.claveLogin);
 
 
         // Boton Registrar de la interfaz "loginUsuario"
