@@ -53,6 +53,8 @@ public class registroUsuario extends AppCompatActivity {
         email = (EditText) findViewById(R.id.emailRegistro);
         claveUno = (EditText) findViewById(R.id.claveRegistro);
         claveDos = (EditText) findViewById(R.id.claveRegistroConfirmar);
+        btnLoginRegistrar = (Button) findViewById(R.id.btnLoginRegistrar);
+        btnRegistroRegistrar = (Button) findViewById(R.id.btnRegistroRegistrar);
 
         btnRegistroRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,7 +67,7 @@ public class registroUsuario extends AppCompatActivity {
 
                 guardarClaveDos = claveDos.getText().toString();
 
-                if (emailRegistro.isEmpty() && guardarClaveUno.isEmpty() && guardarClaveDos.isEmpty() && (guardarClaveUno == guardarClaveDos)) {
+                if (guardarClaveUno == guardarClaveDos) {
 
 
                         MainActivity ob = new MainActivity();

@@ -54,7 +54,7 @@ public class loginUsuario extends AppCompatActivity {
                 email = emailLogin.getText().toString();
                 password = claveLogin.getText().toString();
 
-                if (email.isEmpty() && password.isEmpty()){
+                if ((!email.isEmpty()) && (!password.isEmpty())){
 
                     loginUsuario();
 
