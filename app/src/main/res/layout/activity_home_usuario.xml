@@ -6,4 +6,27 @@
     android:layout_height="match_parent"
     tools:context=".homeUsuario">
 
+    <Button
+        android:id="@+id/btnObtenerUbicacion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Obtener Ubicacion"
+        tools:layout_editor_absoluteX="141dp"
+        tools:layout_editor_absoluteY="541dp" />
+
+    <TextView
+        android:id="@+id/txtLatitud"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="67dp"
+        tools:layout_editor_absoluteY="443dp" />
+
+    <TextView
+        android:id="@+id/txtLongitud"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="249dp"
+        tools:layout_editor_absoluteY="443dp" />
 </android.support.constraint.ConstraintLayout>

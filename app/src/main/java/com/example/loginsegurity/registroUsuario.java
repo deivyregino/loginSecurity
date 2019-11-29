@@ -96,6 +96,14 @@ public class registroUsuario extends AppCompatActivity {
 
             }
         });
+
+        btnLoginRegistrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(registroUsuario.this, loginUsuario.class));
+                finish();
+            }
+        });
     }
 
     private void registrarUsuario(){
