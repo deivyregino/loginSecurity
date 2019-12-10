@@ -56,7 +56,7 @@ public class loginUsuario extends AppCompatActivity {
 
                 if ((!email.isEmpty()) && (!password.isEmpty())){
 
-                    loginUsuario();
+                    loginUsuario(email, password);
 
                 }else{
                     Toast.makeText(loginUsuario.this, "Complete los campos", Toast.LENGTH_LONG).show();
@@ -68,12 +68,13 @@ public class loginUsuario extends AppCompatActivity {
 
     }
 
-    private void loginUsuario(){
+    private void loginUsuario(String email, String password){
 
-        myAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        myAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
+                    Toast.makeText(loginUsuario.this, "Inicio sesion", Toast.LENGTH_LONG).show();
                     startActivity(new Intent(loginUsuario.this, homeUsuario.class));
                     finish();
                 }else {

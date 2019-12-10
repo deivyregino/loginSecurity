@@ -15,15 +15,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".homeUsuario"></activity>
-        <activity android:name=".registroUsuario" />
-        <activity android:name=".loginUsuario" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".registroUsuario">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+        <activity android:name=".loginUsuario"></activity>
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>

@@ -14,11 +14,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class homeUsuario extends AppCompatActivity {
 
     Button btnObtenerUbicacion;
-    EditText txtLatitud, txtLogintud;
+    TextView txtLatitud, txtLogintud;
 
     private LocationManager ubicacion;
 
@@ -29,8 +30,8 @@ public class homeUsuario extends AppCompatActivity {
         setContentView(R.layout.activity_home_usuario);
 
         btnObtenerUbicacion = (Button) findViewById(R.id.btnObtenerUbicacion);
-        txtLatitud = (EditText) findViewById(R.id.txtLatitud);
-        txtLogintud = (EditText) findViewById(R.id.txtLongitud);
+        txtLatitud = (TextView) findViewById(R.id.txtLatitud);
+        txtLogintud = (TextView) findViewById(R.id.txtLongitud);
 
         btnObtenerUbicacion.setOnClickListener(new View.OnClickListener() {
             @Override

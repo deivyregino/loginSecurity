@@ -4,15 +4,18 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -31,12 +34,13 @@ import javax.crypto.SecretKey;
 public class registroUsuario extends AppCompatActivity {
 
     Button btnRegistroRegistrar, btnLoginRegistrar;
-    EditText editEmail;
+    EditText editEmail, nombreUsuario;
 
     private EditText claveUno, claveDos, email;
+    private TextView txtNombreUsuario;
 
 
-    private String emailRegistro = "" , guardarClaveUno = "", guardarClaveDos = "";
+    private String emailRegistro = "" , guardarClaveUno = "", guardarClaveDos = "", nomUsuario;
 
 
     FirebaseAuth myAuth;
@@ -49,9 +53,10 @@ public class registroUsuario extends AppCompatActivity {
         setContentView(R.layout.activity_registro_usuario);
 
         myAuth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance().getReference();
+        database = FirebaseDatabase.getInstance().getReference("users");
         email = (EditText) findViewById(R.id.emailRegistro);
         claveUno = (EditText) findViewById(R.id.claveRegistro);
+        txtNombreUsuario = (TextView) findViewById(R.id.txtNombreUsuario);
         claveDos = (EditText) findViewById(R.id.claveRegistroConfirmar);
         btnLoginRegistrar = (Button) findViewById(R.id.btnLoginRegistrar);
         btnRegistroRegistrar = (Button) findViewById(R.id.btnRegistroRegistrar);
@@ -67,7 +72,9 @@ public class registroUsuario extends AppCompatActivity {
 
                 guardarClaveDos = claveDos.getText().toString();
 
-                if (guardarClaveUno == guardarClaveDos) {
+                nomUsuario = txtNombreUsuario.getText().toString();
+
+           /*     if (guardarClaveUno == guardarClaveDos) {
 
 
                         MainActivity ob = new MainActivity();
@@ -91,7 +98,7 @@ public class registroUsuario extends AppCompatActivity {
                         }
                 } else {
                     Toast.makeText(registroUsuario.this, "Por favor, llene todos los campos o verifique que las claves sean iguales", Toast.LENGTH_LONG).show();
-                }
+                }*/
                 registrarUsuario();
 
 
@@ -110,34 +117,51 @@ public class registroUsuario extends AppCompatActivity {
 
     private void registrarUsuario(){
 
-        myAuth.createUserWithEmailAndPassword(emailRegistro, guardarClaveUno).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
+        myAuth.createUserWithEmailAndPassword(emailRegistro, guardarClaveUno)
+            .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()){
 
-                    Map<String, Object> map = new HashMap<>();
+                        String llave = myAuth.getUid();
+                        String emailUsuario = email.getText().toString();
+                        String nombreUsuario = txtNombreUsuario .getText().toString();
 
-                    map.put("Email", email);
-                    map.put("Password", guardarClaveUno);
+                        Usuario u = new Usuario(llave, emailUsuario,nombreUsuario);
 
-                    String id = myAuth.getCurrentUser().getUid();
+                        database.child(llave).setValue(u);
 
-                    database.child("Users").child(id).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task2) {
-                            if (task2.isSuccessful()){
-                                startActivity(new Intent(registroUsuario.this, loginUsuario.class));
-                                finish();
-                            }else{
-                                Toast.makeText(registroUsuario.this, "No se pudieron crear los datos correctamente", Toast.LENGTH_LONG).show();
+
+                        FirebaseUser user = myAuth.getCurrentUser();
+
+                        Map<String, Object> map = new HashMap<>();
+
+                   //     map.put("Email", email);
+                    //    map.put("Password", guardarClaveUno);
+
+                        String id = myAuth.getCurrentUser().getUid();
+
+
+
+                    /*    database.child("users").child(id).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task2) {
+                                if (task2.isSuccessful()){
+                                    startActivity(new Intent(registroUsuario.this, loginUsuario.class));
+                                    finish();
+                                }else{
+                                    Toast.makeText(registroUsuario.this, "No se pudieron crear los datos correctamente", Toast.LENGTH_LONG).show();
+                                }
                             }
-                        }
-                    });
-                }else {
-                    Toast.makeText(registroUsuario.this, "No se pudo registrar este usuario", Toast.LENGTH_LONG).show();
+                        });*/
+                    }else {
+                        Log.w("mensaje", "createUserWithEmail:failure", task.getException());
+                        Toast.makeText(registroUsuario.this, "Authentication failed.",
+                                Toast.LENGTH_SHORT).show();
+                        Toast.makeText(registroUsuario.this, "No se pudo registrar este usuario", Toast.LENGTH_LONG).show();
+                    }
                 }
-            }
-        });
+            });
 
     }
 
