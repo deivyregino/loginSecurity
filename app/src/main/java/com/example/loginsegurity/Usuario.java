@@ -5,7 +5,6 @@ public class Usuario {
     private String id, email, nombre;
 
     public Usuario (String id, String email, String nombre){
-        this.id = id;
         this.email = email;
         this.nombre = nombre;
     }

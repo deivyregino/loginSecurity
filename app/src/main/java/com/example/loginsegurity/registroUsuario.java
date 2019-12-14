@@ -1,6 +1,8 @@
 package com.example.loginsegurity;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -59,6 +61,8 @@ public class registroUsuario extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro_usuario);
 
+        conexionSqLiteHelper con = new conexionSqLiteHelper(this, "bdUsuarios", null, 1);
+
         myAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance().getReference("users");
         email = (EditText) findViewById(R.id.emailRegistro);
@@ -109,9 +113,7 @@ public class registroUsuario extends AppCompatActivity {
                 String encriptacion = encrypt(emailRegistro, llaveEncriptacion) ;
                 String desencriptacion = decrypt(encriptacion, llaveEncriptacion) ;
                 registrarUsuario();
-
-
-
+                registrarUsuarioSqLite();
             }
         });
 
@@ -173,4 +175,18 @@ public class registroUsuario extends AppCompatActivity {
             });
 
     }
+
+        private void registrarUsuarioSqLite(){
+            conexionSqLiteHelper con = new conexionSqLiteHelper(this, "bdUsuarios", null, 1);
+
+            SQLiteDatabase ob = con.getWritableDatabase();
+
+            ContentValues values = new ContentValues();
+            values.put(utilidadesConstantes.campoEmail,email.getText().toString());
+            values.put(utilidadesConstantes.campoNombre,txtNombreUsuario.getText().toString());
+
+            Long respuestaSqLite = ob.insert(utilidadesConstantes.tablaUsuario, utilidadesConstantes.campoEmail,values);
+            ob.close();
+
+        }
 }
